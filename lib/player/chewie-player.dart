@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+import 'package:nan_movie/player/chewie_list_item.dart';
+import 'package:video_player/video_player.dart';
+
+//The best way
+
+class Mychewieplayer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Nan audio visuel',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MychewieplayerPage(),
+    );
+  }
+  
+}
+
+class MychewieplayerPage extends StatelessWidget {
+  List lienvideos = ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4","",""];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Video Player'),
+      ),
+      body: ListView(
+        children: <Widget>[
+          new Container(
+            child: new ChewieListItem(
+              videoPlayerController: VideoPlayerController.asset(
+                'assets/videos/video1.mp4',
+              ),
+              looping: true,
+            ),
+          ),
+          new Container(
+            child : ChewieListItem(
+              // This URL doesn't exist - will display an error
+              videoPlayerController: VideoPlayerController.network(
+                'http://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4',
+              ),
+            ),
+          ),
+          new Container(
+            child : ChewieListItem(
+              // This URL doesn't exist - will display an error
+              videoPlayerController: VideoPlayerController.network(
+                'http://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4',
+              ),
+            ),
+          ),
+         
+        ],
+      ),
+    );
+  }
+}

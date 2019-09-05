@@ -1,0 +1,52 @@
+name: nan_movie
+description: Gorgeous Login UI
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # dio: ^2.1.16
+  http: ^0.12.0+2
+  cupertino_icons: ^0.1.2
+  sqflite: ^1.1.6
+  video_player: ^0.10.2+1
+  shared_preferences: ^0.5.3+4
+  chewie: ^0.9.7
+
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  font_awesome_flutter: ^8.0.1
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+      - assets/login_logo.png
+      - assets/videos/video1.mp4
+      - assets/images/logo.png
+      - assets/images/powered_by.png
+      - assets/images/email_icon.png
+      - assets/images/password_icon.png
+      - assets/images/user_icon.png
+      - assets/images/as.png
+
+  fonts:
+    - family: WorkSansSemiBold
+      fonts:
+        - asset: assets/fonts/Work_Sans/WorkSans-SemiBold.ttf
+
+    - family: WorkSansBold
+      fonts:
+        - asset: assets/fonts/Work_Sans/WorkSans-Bold.ttf
+
+    - family: WorkSansMedium
+      fonts:
+        - asset: assets/fonts/Work_Sans/WorkSans-Medium.ttf

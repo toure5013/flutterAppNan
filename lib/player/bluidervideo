@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+import 'package:nan_movie/player/chewie_list_item.dart';
+import 'package:video_player/video_player.dart';
+
+//The best way
+
+class Mychewieplayer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Nan audio visuel',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MychewieplayerPage(),
+    );
+  }
+}
+
+class MychewieplayerPage extends StatelessWidget {
+  int nbreVideo;
+  List lienvideos = ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4","http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4","http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Video Player'),
+      ),
+      body: ListView.builder(
+        itemCount: nbreVideo == null? 0 : lienvideos.length,
+        itemBuilder: (BuildContext context, int index){
+        return new ChewieListItem(
+              videoPlayerController: VideoPlayerController.network(
+                'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+              ),
+              looping: true,
+          );
+        }
+      ),
+    );
+  }
+}
