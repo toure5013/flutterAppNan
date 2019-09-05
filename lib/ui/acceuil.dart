@@ -1,22 +1,30 @@
+import 'dart:async';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
+
 import 'package:flutter/services.dart';
+
 import 'package:nan_movie/Screens/ProfilePage.dart';
-import 'package:nan_movie/style/theme.dart' as Theme;
+
 import 'package:nan_movie/ui/login_page.dart';
+import 'package:nan_movie/ui/movies-files.dart';
+
 import 'package:nan_movie/utils/function.dart' as myFunction;
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'dart:convert' as convert;
 
 class AcceuilPage extends StatefulWidget {
   AcceuilPage({Key key}) : super(key: key);
 
-  _AcceuilPageState createState() => _AcceuilPageState();``
+  _AcceuilPageState createState() => _AcceuilPageState();
 }
 
 class _AcceuilPageState extends State<AcceuilPage> {
   var movies;
+  var videos;
   var searchText;
+  dynamic moviesFirst;
   SharedPreferences prefs;
   
   void initState() {
@@ -25,10 +33,12 @@ class _AcceuilPageState extends State<AcceuilPage> {
     //Make get request for getting all movies
     // var getMoviesIntance = new Myfunctions();
     //TODO : créer une zone de texte qui va permettre à l'utilisateur de faire des recheerche de type de video
-    searchText = "home";
-    movies = myFunction.Myfunctions.getMovies();
-    // movies = convert.jsonEncode(movies);
-    print(movies);
+    // searchText = "home";
+    // movies = myFunction.getMovies(searchText);
+    // // movies = convert.jsonEncode(movies);
+    // print(movies);
+     moviesFirst = firtMoviesKids;
+     print(moviesFirst);
   }
 
   @override
@@ -37,7 +47,7 @@ class _AcceuilPageState extends State<AcceuilPage> {
     TextEditingController searchController = new TextEditingController();
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: prefix0.Colors.orange,
+          backgroundColor: Colors.deepOrangeAccent,
           title: new TextField(
               controller: searchController,
               keyboardType: TextInputType.text,
@@ -58,8 +68,12 @@ class _AcceuilPageState extends State<AcceuilPage> {
           elevation: 4.0,
           icon: const Icon(Icons.widgets),
           label: const Text('Chercher la vidéo'),
-          backgroundColor: prefix0.Colors.orange,
-          onPressed: () {},
+          backgroundColor: Colors.deepOrangeAccent,
+          onPressed: () async {
+             firtMoviesKids = await http.get("http://www.omdbapi.com/?apikey=13ba2d6f&s='${searchController.text}'");
+            firtMoviesKids = convert.jsonDecode(firtMoviesKids.body);
+            print(firtMoviesKids);
+          },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
@@ -73,7 +87,7 @@ class _AcceuilPageState extends State<AcceuilPage> {
               ),
               IconButton(
                 icon: Icon(Icons.assignment),
-                color: Colors.orange,
+                color: Colors.deepOrangeAccent,
                 onPressed: () {
                   // try{ 
                   //     prefs =_incrementCounter();
@@ -111,39 +125,70 @@ class _AcceuilPageState extends State<AcceuilPage> {
 
         ///BODY IS HERE
         body: ListView.builder(
-            itemCount: movies == null ? 0 : 10,
+            itemCount: moviesFirst == null ? 0 : moviesFirst.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     new Image.network(
-                        'https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg'),
-                    const ListTile(
+                        moviesFirst[index]['Poster'].toString()
+                        ),
+                     ListTile(
                       leading: Icon(Icons.album),
-                      title: Text("--"),
+                      title: Text(
+                         "Titre :  ${moviesFirst[index]['Title'].toString()}"
+                      ),
                       subtitle:
-                          Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
+                          Text("Année de sortie: ${moviesFirst[index]['Year'].toString()}"),
                     ),
                     ButtonTheme.bar(
                       // make buttons use the appropriate styles for cards
                       child: ButtonBar(
                         children: <Widget>[
                           FlatButton(
-                            child: const Text('Info film'),
+                            color: Colors.deepOrangeAccent,
+                            child:  new Row(
+                              children: <Widget>[
+                                new Text(
+                                  'Voir',
+                                style: new TextStyle(
+                                  color: Colors.white,
+                                  
+                                ),
+                                ),
+                                Icon(Icons.remove_red_eye)
+                             ],
+                            ),
                             onPressed: () {/* ... */},
                           ),
                           FlatButton(
-                            child: const Text('Reserver un ticket'),
+                            color: Colors.deepOrangeAccent,
+                            child:  new Row(
+                             children: <Widget>[
+                                new Text(
+                                  'Acheter le film',
+                                style: new TextStyle(
+                                  color: Colors.white
+                                ),
+                                ),
+                                Icon(Icons.bubble_chart)
+                             ],
+                            ),
                             onPressed: () {/* ... */},
                           ),
+                        
                         ],
+                        
                       ),
                     ),
                   ],
                 ),
               );
-            }));
+            }),
+            
+           
+            );
   }
 
 _incrementCounter() async {
