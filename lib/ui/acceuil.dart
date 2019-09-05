@@ -11,7 +11,7 @@ import 'dart:convert' as convert;
 class AcceuilPage extends StatefulWidget {
   AcceuilPage({Key key}) : super(key: key);
 
-  _AcceuilPageState createState() => _AcceuilPageState();
+  _AcceuilPageState createState() => _AcceuilPageState();``
 }
 
 class _AcceuilPageState extends State<AcceuilPage> {
@@ -23,10 +23,10 @@ class _AcceuilPageState extends State<AcceuilPage> {
     // TODO: implement initState
     super.initState();
     //Make get request for getting all movies
-    var getMoviesIntance = new Myfunctions();
+    // var getMoviesIntance = new Myfunctions();
     //TODO : créer une zone de texte qui va permettre à l'utilisateur de faire des recheerche de type de video
     searchText = "home";
-    movies = getMovies(searchText);
+    movies = myFunction.Myfunctions.getMovies();
     // movies = convert.jsonEncode(movies);
     print(movies);
   }
